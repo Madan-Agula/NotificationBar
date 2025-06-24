@@ -8,7 +8,7 @@ const notifyRoute = (app: FastifyInstance) => {
     "/registerToken",
     {
       schema: {
-        body: Type.String(),
+        body: Type.Object({ token: Type.String() }),
         response: {
           200: Type.Object({ message: Type.String() }),
         },
