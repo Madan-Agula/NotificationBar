@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc && npx tsc-alias",
     "start": "node dist/server.js",
-    "dev": "pm2 start src/server.ts --name ai-gifs-api --watch --ignore-watch='src/temp node_modules logs' -f"
+    "dev": "pm2 start src/server.ts --name notification-api --instances 1 --watch -f"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,8 @@
     "@fastify/sensible": "^6.0.3",
     "@sinclair/typebox": "^0.34.30",
     "axios": "^1.10.0",
-    "fastify": "^5.2.1"
+    "fastify": "^5.2.1",
+    "firebase-admin": "^13.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.3",

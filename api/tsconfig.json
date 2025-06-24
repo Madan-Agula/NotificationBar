@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2016",
+    "sourceMap": false,
     /* Modules */
     "module": "commonjs",
     "baseUrl": "./src",

@@ -23,7 +23,11 @@ const notifyRoute = (app: FastifyInstance) => {
       schema: {
         body: SendNotificationSchema,
         response: {
-          200: Type.Object({ message: Type.String(), token: Type.String() }),
+          200: Type.Object({
+            status: Type.String(),
+            success: Type.Number(),
+            failed: Type.Number(),
+          }),
         },
       },
     },
