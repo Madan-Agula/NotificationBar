@@ -1,10 +1,8 @@
 import { FastifyInstance } from "fastify";
-import promptRoute from "./prompt-route";
-import userRoute from "./notify";
+import notifyRoute from "./notify";
 
 const Routes = (app: FastifyInstance) => {
-  app.register(userRoute);
-  app.register(promptRoute);
+  app.register(notifyRoute);
 };
 
 export default Routes;

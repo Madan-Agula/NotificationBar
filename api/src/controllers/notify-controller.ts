@@ -1,8 +1,6 @@
 import { SendNotificationType } from "@/schema";
-import axios from "axios";
+import { sendNotificationToDevice } from "@/utils/helper-util";
 import { FastifyReply, FastifyRequest } from "fastify";
-
-const EXPO_PUSH_URL = "https://exp.host/--/api/v2/push/send";
 
 let tokens: string[] = [];
 
@@ -15,7 +13,7 @@ export const registerToken = async (
     if (token && !tokens.includes(token)) {
       tokens.push(token);
     }
-    reply.send({ status: "Token stored" });
+    reply.send({ message: "Token stored" });
   } catch (error: any) {
     reply.status(500).send({ error: error.message || "Something went wrong" });
   }
@@ -24,26 +22,17 @@ export const registerToken = async (
 export const sendNotification = async (
   request: FastifyRequest,
   reply: FastifyReply
-): Promise<void> => {
+) => {
   const { title, body, data } = request.body as SendNotificationType;
+  const responses = await Promise.allSettled(
+    tokens.map((token) => sendNotificationToDevice(token, title, body, data))
+  );
+  const success = responses.filter((r) => r.status === "fulfilled").length;
+  const failed = responses.length - success;
 
-  const messages = tokens.map((token) => ({
-    to: token,
-    sound: "default",
-    title,
-    body,
-    data,
-  }));
-
-  try {
-    const response = await axios.post(EXPO_PUSH_URL, messages, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    reply.send({ status: "Notification sent", response: response.data });
-  } catch (error: any) {
-    reply.status(500).send({ error: error.message || "Something went wrong" });
-  }
+  reply.send({
+    status: "Notifications sent",
+    success,
+    failed,
+  });
 };

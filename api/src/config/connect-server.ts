@@ -2,11 +2,7 @@ import Routes from "@/routes";
 import cors from "@fastify/cors";
 import { FastifyInstance } from "fastify";
 
-export const connectServer = async (
-  app: FastifyInstance,
-  PORT: number,
-  SCRETE: string
-) => {
+export const connectServer = async (app: FastifyInstance, PORT: number) => {
   try {
     app.register(cors, {
       origin: "*",
