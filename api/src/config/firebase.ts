@@ -3,8 +3,6 @@ import admin from "firebase-admin";
 
 dotenv.config();
 
-console.log(process.env.type, " process.env.type process.env.type");
-
 const serviceAccount: any = {
   type: process.env.type ?? "",
   project_id: process.env.project_id ?? "",
