@@ -8,8 +8,11 @@ export async function sendNotificationToDevice(
 ) {
   const message = {
     token,
-    notification: { title, body },
-    data: data || {},
+    data: {
+      title,
+      body,
+      ...(data || {}),
+    },
   };
 
   return await admin.messaging().send(message);
